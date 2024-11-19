@@ -35,8 +35,9 @@ export const App: FC = () => {
         // This is an API Key that only works for these examples.
         // Provide your own Map SDK API Key instead.
         // For more details, see: https://docs.foursquare.com/developer/docs/studio-map-sdk-authentication
-        apiKey: "fsq3CYDP77ybwoo1KtkJigGRj6g0uYyhWVw25jM+zN6ovbI=",
+        apiKey: "fsq37od31T2Rd77qwUtKrgYY5k8yuFed5HKZ4oH4HWpiFrY=",
         container: containerRef.current!,
+        initialState: {publishedMapId: '6a22eaf3-e964-4e17-b4cf-d88d75635d0a'}
       });
 
       setMap(map);
@@ -45,6 +46,50 @@ export const App: FC = () => {
     initMap();
     loadData();
   }, []);
+  useEffect(() => {
+    if (map ) {
+      // map.addDataset(sampleData[0], { autoCreateLayers: false });
+      // map.addLayer({
+      //   type: "grid",
+      //   dataId: "earthquakes",
+      //   fields: {
+      //     lat: "Latitude",
+      //     lng: "Longitude",
+      //   },
+      //   config: {
+      //     visConfig: {
+      //       worldUnitSize: 26,
+      //       elevationScale: 90,
+      //       enable3d: true,
+      //     },
+      //   },
+      // });
+      map.setTheme({
+        preset: "light",
+        // options: {
+        //   backgroundColor: "lightseagreen",
+        // },
+      });
+      map.setMapConfig({
+        version: "v1",
+        config: {
+          mapState: {
+            pitch: 50,
+            bearing: 24,
+            mapViewMode: "MODE_3D",
+          },
+          "mapStyle": {
+            "styleType": "light"  // Sets the basemap to 'light'
+          }
+        },
+      });
+      map.setView({
+        latitude: 32.7045671093519,
+        longitude: -117.47582941779496,
+        zoom: 8.0,
+      });
+    }
+  }, [map]);
 
   const handlers = useMemo(() => {
     if (!sampleData) {
@@ -110,11 +155,11 @@ export const App: FC = () => {
       {!!handlers && (
         <div className="controls">
           {/* Buttons for various dataset operations */}
-          <button onClick={handlers.addDataset}>Add Dataset</button>
-          <button onClick={handlers.updateDataset}>Update Dataset</button>
-          <button onClick={handlers.replaceDataset}>Replace Dataset</button>
-          <button onClick={handlers.displayDataset}>Get Dataset</button>
-          <button onClick={handlers.removeDataset}>Remove Dataset</button>
+          <button onClick={handlers.addDataset}>Show Complaints</button>
+          <button onClick={handlers.updateDataset}>Show Air Quality</button>
+          <button onClick={handlers.replaceDataset}>Show Health Indexes</button>
+          <button onClick={handlers.displayDataset}>Play Animation</button>
+
         </div>
       )}
 

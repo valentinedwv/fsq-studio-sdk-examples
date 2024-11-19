@@ -11,12 +11,13 @@ body {
 
 .controls {
   position: fixed;
-  right: 0;
+  left: 0;
   bottom: 0;
   margin: 20px;
   display: flex;
   gap: 5px;
   flex-direction: column;
+  z-index: 100;
 }
 
 /* Styles for the JSON popup container */
@@ -61,3 +62,6 @@ body {
   font-family: monospace;
   font-size: 14px;
 }
+div.dark {
+   visibility: hidden;
+ }
