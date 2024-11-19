@@ -91,8 +91,8 @@ export const App: FC = () => {
         },
       });
       map.setView({
-        latitude: 32.7045671093519,
-        longitude: -117.47582941779496,
+        latitude: 32.3045671093519,
+        longitude: -117.1582941779496,
         zoom: 10.0,
       });
     }
@@ -113,6 +113,7 @@ export const App: FC = () => {
       flipHealthLayer: () => {
         const groups = map.getLayerGroups();
         const health = groups.find((g) => g.id=='8owf0vr')
+        if (health === undefined) { return }
         if (health.isVisible) {
             setHealthLabel("Show Health Index");
           health.isVisible = false;
@@ -126,6 +127,7 @@ export const App: FC = () => {
       flipObsLayer: () => {
         const groups = map.getLayerGroups();
         const health = groups.find((g) => g.id=='jpqdowy')
+        if (health === undefined) { return }
         if (health.isVisible) {
           setHealthLabel("Show Observations");
           health.isVisible = false;
@@ -139,6 +141,7 @@ export const App: FC = () => {
       flipOdorLayer: () => {
         const groups = map.getLayerGroups();
         const health = groups.find((g) => g.id=='1bqkm36')
+        if (health === undefined) { return }
         if (health.isVisible) {
           setOdorLabel("Show Odor Complaints");
           health.isVisible = false;
