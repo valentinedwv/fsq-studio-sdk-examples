@@ -24,7 +24,9 @@ export const App: FC = () => {
   const [sampleData, setSampleData] = useState<
     [SampleDataItem, SampleDataItem] | null
   >(null);
-
+  const [healthLabel, setHealthLabel] = useState<string>("Show Health Index");
+  const [observationsLabel, setObservationsLabel] = useState<string>("Show Observations Group");
+  const [odorLabel, setOdorLabel] = useState<string>("Show Odor Complaints");
   useEffect(() => {
     const loadData = async () => {
       setSampleData(await fetchSampleData());
@@ -64,6 +66,8 @@ export const App: FC = () => {
       //     },
       //   },
       // });
+      console.log(map.getLayers());
+      console.log(map.getLayerGroups());
       map.setTheme({
         preset: "light",
         // options: {
@@ -80,13 +84,16 @@ export const App: FC = () => {
           },
           "mapStyle": {
             "styleType": "light"  // Sets the basemap to 'light'
+          },
+          'uiState':{
+            sidePanel: 'hidden'
           }
         },
       });
       map.setView({
         latitude: 32.7045671093519,
         longitude: -117.47582941779496,
-        zoom: 8.0,
+        zoom: 10.0,
       });
     }
   }, [map]);
@@ -103,6 +110,45 @@ export const App: FC = () => {
     }
 
     return {
+      flipHealthLayer: () => {
+        const groups = map.getLayerGroups();
+        const health = groups.find((g) => g.id=='8owf0vr')
+        if (health.isVisible) {
+            setHealthLabel("Show Health Index");
+          health.isVisible = false;
+        } else {
+          setHealthLabel("Hide Health Index");
+          health.isVisible = true;
+        }
+        map.updateLayerGroup(health.id,health)
+
+      },
+      flipObsLayer: () => {
+        const groups = map.getLayerGroups();
+        const health = groups.find((g) => g.id=='jpqdowy')
+        if (health.isVisible) {
+          setHealthLabel("Show Observations");
+          health.isVisible = false;
+        } else {
+          setHealthLabel("Hide Observations");
+          health.isVisible = true;
+        }
+        map.updateLayerGroup(health.id,health)
+
+      },
+      flipOdorLayer: () => {
+        const groups = map.getLayerGroups();
+        const health = groups.find((g) => g.id=='1bqkm36')
+        if (health.isVisible) {
+          setOdorLabel("Show Odor Complaints");
+          health.isVisible = false;
+        } else {
+          setOdorLabel("Hide Odor Complaints");
+          health.isVisible = true;
+        }
+        map.updateLayerGroup(health.id,health)
+
+      },
       addDataset: () => {
         if (map.getDatasets().length > 0) {
           console.log(
@@ -155,9 +201,9 @@ export const App: FC = () => {
       {!!handlers && (
         <div className="controls">
           {/* Buttons for various dataset operations */}
-          <button onClick={handlers.addDataset}>Show Complaints</button>
-          <button onClick={handlers.updateDataset}>Show Air Quality</button>
-          <button onClick={handlers.replaceDataset}>Show Health Indexes</button>
+          <button id="odorbtn" onClick={handlers.flipOdorLayer}>{odorLabel}</button>
+          <button id="obshbtn" onClick={handlers.flipObsLayer}>{observationsLabel}</button>
+          <button id="healthbtn" onClick={handlers.flipHealthLayer}>{healthLabel}</button>
           <button onClick={handlers.displayDataset}>Play Animation</button>
 
         </div>

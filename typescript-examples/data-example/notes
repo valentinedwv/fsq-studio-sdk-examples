@@ -1,0 +1,47 @@
+promo -- airquaility
+power -- spill
+
+unstar - beach closed
+eight-ball
+
+
+[
+    {
+        "id": "jpqdowy",
+        "label": "Observations",
+        "isVisible": true,
+        "layerIds": [
+            "r6merhc",
+            "8v9kyqn",
+            "ab6gfv",
+            "rkumtmu"
+        ]
+    },
+    {
+        "id": "1bqkm36",
+        "label": "Odor Complaints",
+        "isVisible": true,
+        "layerIds": [
+            "tnas6ct",
+            "jw865yb",
+            "9uu7yca"
+        ]
+    },
+    {
+        "id": "5tnuf2g",
+        "label": "Watershed",
+        "isVisible": true,
+        "layerIds": [
+            "bhs5dv",
+            "q6alga9"
+        ]
+    },
+    {
+        "id": "8owf0vr",
+        "label": "Health",
+        "isVisible": true,
+        "layerIds": [
+            "g28g3ka"
+        ]
+    }
+]
