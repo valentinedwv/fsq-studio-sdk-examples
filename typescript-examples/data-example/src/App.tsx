@@ -27,6 +27,7 @@ export const App: FC = () => {
   const [healthLabel, setHealthLabel] = useState<string>("Show Health Index");
   const [observationsLabel, setObservationsLabel] = useState<string>("Show Observations Group");
   const [odorLabel, setOdorLabel] = useState<string>("Show Odor Complaints");
+  const [waterLabel, setWaterLabel] = useState<string>("Hide Water");
   useEffect(() => {
     const loadData = async () => {
       setSampleData(await fetchSampleData());
@@ -78,9 +79,9 @@ export const App: FC = () => {
         version: "v1",
         config: {
           mapState: {
-            pitch: 50,
-            bearing: 24,
-            mapViewMode: "MODE_3D",
+            pitch: 80,
+            bearing:20,
+            mapViewMode: "MODE_2D",
           },
           "mapStyle": {
             "styleType": "light"  // Sets the basemap to 'light'
@@ -129,10 +130,10 @@ export const App: FC = () => {
         const health = groups.find((g) => g.id=='jpqdowy')
         if (health === undefined) { return }
         if (health.isVisible) {
-          setHealthLabel("Show Observations");
+          setObservationsLabel("Show Observations");
           health.isVisible = false;
         } else {
-          setHealthLabel("Hide Observations");
+          setObservationsLabel("Hide Observations");
           health.isVisible = true;
         }
         map.updateLayerGroup(health.id,health)
@@ -147,6 +148,20 @@ export const App: FC = () => {
           health.isVisible = false;
         } else {
           setOdorLabel("Hide Odor Complaints");
+          health.isVisible = true;
+        }
+        map.updateLayerGroup(health.id,health)
+
+      },
+      flipWaterLayer: () => {
+        const groups = map.getLayerGroups();
+        const health = groups.find((g) => g.id=='5tnuf2g')
+        if (health === undefined) { return }
+        if (health.isVisible) {
+          setWaterLabel("Show Streams");
+          health.isVisible = false;
+        } else {
+          setWaterLabel("Hide Streams");
           health.isVisible = true;
         }
         map.updateLayerGroup(health.id,health)
@@ -207,7 +222,7 @@ export const App: FC = () => {
           <button id="odorbtn" onClick={handlers.flipOdorLayer}>{odorLabel}</button>
           <button id="obshbtn" onClick={handlers.flipObsLayer}>{observationsLabel}</button>
           <button id="healthbtn" onClick={handlers.flipHealthLayer}>{healthLabel}</button>
-          <button onClick={handlers.displayDataset}>Play Animation</button>
+          <button id="waterbtn" onClick={handlers.flipWaterLayer}>{waterLabel}</button>
 
         </div>
       )}
